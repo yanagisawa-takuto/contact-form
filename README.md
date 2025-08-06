@@ -1,98 +1,102 @@
-# contact-form
+# 環境構築手順
 
-## 概要
-◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯、◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯、◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯◯。
+## リポジトリをClone
 
-## 環境構築手順
-
-リポジトリをClone
-`` `
-cd coachtech/laravel
+```bash
+cd coacchtech/laravel
 git clone git@github.com:Estra-Coachtech/laravel-docker-template.git
 mv laravel-docker-template contact-form
 cd contact-form
-git remote set-url origin 作成したリポジトリのurl
+git remote set-url origin 作成したリポジトリのURL
 git remote -v
 git add .
 git commit -m "リモートリポジトリの変更"
 git push origin main
+```
 
-エラーが発生する場合は　$ sudo chmod -R 777 *で権限を変更
-`` `
+> エラーが発生する場合  
+> ```bash
+> sudo chmod -R 777 ＜権限を変更＞
+> ```
 
-Dockerを起動
-`` `
-docker compose up -d --build
-code .
-`` `
+---
 
-Laravelパッケージをインストールする
-`` `
-docker-compose exec php bash
-composer install　※「開発環境を共有してもらう」場合は、必ずcomposer installする
-`` `
+## Dockerを起動
 
-envファイルの準備
-`` `
-cp src/.env.example src/.env
-exit
-`` `
+```bash
+docker compose up -d --build code .
+```
 
-Laravelのセットアップ
-`` `
+---
+
+## Laravelパッケージをインストールする
+
+```bash
 docker-compose exec php bash
 composer install
-php artisan xxx
-php artisan xxx
-php artisan xxx
-`` `
+```
 
-「Dockerを起動」の「code .」コマンドで開いたVSCodeで、.envファイルの修正を行う
-`` `
-// 前略
+> ※「開発環境を共有してもらう」場合は、`composer install`は不要です。
 
+---
+
+## envファイルの準備
+
+```bash
+cp src/.env.example src/.env
+exit
+```
+
+---
+
+## Laravelのセットアップ
+
+```bash
+docker-compose exec php bash
+composer install
+php artisan key:generate
+php artisan migrate
+php artisan xxx
+```
+
+---
+
+## .envファイルの修正（VSCodeで開く）
+
+```env
 DB_CONNECTION=mysql
-- DB_HOST=127.0.0.1
-+ DB_HOST=mysql
+DB_HOST=127.0.0.1
 DB_PORT=3306
-- DB_DATABASE=laravel
-- DB_USERNAME=root
-- DB_PASSWORD=
-+ DB_DATABASE=laravel_db
-+ DB_USERNAME=laravel_user
-+ DB_PASSWORD=laravel_pass
+DB_DATABASE=laravel
+DB_USERNAME=root
+DB_PASSWORD=
 
-// 後略
-`` `
+DB_DATABASE=laravel_db
+DB_USERNAME=laravel_user
+DB_PASSWORD=laravel_pass
+```
 
+---
 
-各ページの view ファイルを作成
-`` `
-resources/views直下に以下 3 つの Blade ファイルを作成
+## 各ページのBladeファイル作成
 
-index.blade.php
-confirm.blade.php
-thanks.blade.php
-`` `
+以下を作成してください：
 
-css ファイルの作成
-`` `
-public/cssに直下に以下 4 つの CSS ファイルを作成
+```
+resources/views/
+├── index.blade.php
+├── confirm.blade.php
+└── thanks.blade.php
+```
 
-sanitize.css
-index.css
-confirm.css
-thanks.css
-`` `
+---
 
-## 使用技術(実行環境)
-- PHP 8.4.8 
-- Laravel 8.83.8
-- MySQL 8.0.26
+## CSSファイルの作成
 
-## ER図
-![alt](erd.png)
-
-## 動作URL
-- 開発環境：http://localhost/
-- phpMyAdmin:：http://localhost:8080/
+```
+public/css/
+├── sanitize.css
+├── index.css
+├── confirm.css
+└── thanks.css
+```
