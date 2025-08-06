@@ -1,3 +1,9 @@
+# contact-form
+
+## 概要
+コンタクトフォームです。
+ログイン機能実装（8/6）
+
 # 環境構築手順
 
 ## リポジトリをClone
@@ -100,3 +106,15 @@ public/css/
 ├── confirm.css
 └── thanks.css
 ```
+
+## 使用技術(実行環境)
+- PHP 8.4.8 
+- Laravel 8.83.8
+- MySQL 8.0.26
+
+## ER図
+![alt](erd.png)
+
+## 動作URL
+- 開発環境：http://localhost/
+- phpMyAdmin:：http://localhost:8080/
