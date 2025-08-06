@@ -20,6 +20,10 @@
         <div class="contact-form__content">
             <div class="contact-form__heading">
                 <h2>お問い合わせ</h2>
+                <form method="POST" action="/logout">
+                    @csrf
+                    <button type="submit">ログアウト</button>
+                </form>
             </div>
             <form class="form" action="/contacts/confirm" method="post">
                 @csrf
@@ -87,12 +91,6 @@
                 <div class="form__button">
                     <button class="form__button-submit" type="submit">送信</button>
                 </div>
-            </form>
-            <form class="roginform" method="POST" action="{{ route('login') }}">
-                @csrf
-                <input type="email" name="email" placeholder="浦和ナメたら殺す💛💛💛" required>
-                <input type="password" name="password" placeholder="パスワード" required>
-                <button type="submit">ログイン</button>
             </form>
         </div>
     </main>

@@ -21,3 +21,7 @@ Route::get('/', function () {
 Route::get('/', [ContactController::class, 'index']);
 Route::post('/contacts/confirm', [ContactController::class, 'confirm']);
 Route::post('/contacts', [ContactController::class, 'store']);
+Route::middleware(['auth'])->group(function () {
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+    Route::post('/contact', [ContactController::class, 'submit']);
+});

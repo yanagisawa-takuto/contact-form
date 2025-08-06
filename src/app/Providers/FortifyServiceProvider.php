@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 use App\Actions\Fortify\CreateNewUser;
 use App\Actions\Fortify\ResetUserPassword;
 use App\Actions\Fortify\UpdateUserPassword;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
+use Illuminate\Support\Facades\Route;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -29,7 +32,7 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot()
     {
         Fortify::loginView(function () {
-            return view('auth.login'); // ← 自前のビューを指定
+            return view('auth.login');
         });
 
         Fortify::authenticateUsing(function ($request) {
@@ -39,5 +42,24 @@ class FortifyServiceProvider extends ServiceProvider
                 return $user;
             }
         });
+
+        RateLimiter::for('login', function (Request $request) {
+        return Limit::perMinute(10)->by($request->email.$request->ip());
+        });
+
+        Fortify::authenticateUsing(function ($request) {
+        $user = \App\Models\User::where('email', $request->email)->first();
+        if ($user && \Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
+        return $user;
+        }
+        });
+
+        app('router')->get('/home', function () {
+        return redirect('/contact');
+        });
+
+        Fortify::loginView(function () {
+        return view('auth.login');
+    });
     }
 }
