@@ -20,7 +20,7 @@ git commit -m "リモートリポジトリの変更"
 git push origin main
 ```
 
-> エラーが発生する場合  
+> エラーが発生する場合
 > ```bash
 > sudo chmod -R 777 ＜権限を変更＞
 > ```
@@ -30,7 +30,7 @@ git push origin main
 ## Dockerを起動
 
 ```bash
-docker compose up -d --build code .
+docker compose up -d --build
 ```
 
 ---
@@ -50,24 +50,7 @@ composer install
 
 ```bash
 cp src/.env.example src/.env
-exit
 ```
-
----
-
-## Laravelのセットアップ
-
-```bash
-docker-compose exec php bash
-composer install
-php artisan key:generate
-php artisan migrate
-php artisan xxx
-```
-
----
-
-## .envファイルの修正（VSCodeで開く）
 
 ```env
 DB_CONNECTION=mysql
@@ -82,33 +65,15 @@ DB_USERNAME=laravel_user
 DB_PASSWORD=laravel_pass
 ```
 
----
+## Laravelのセットアップ
 
-## 各ページのBladeファイル作成
-
-以下を作成してください：
-
+```bash
+docker-compose exec php bash
+php artisan key:generate
+php artisan migrate
 ```
-resources/views/
-├── index.blade.php
-├── confirm.blade.php
-└── thanks.blade.php
-```
-
----
-
-## CSSファイルの作成
-
-```
-public/css/
-├── sanitize.css
-├── index.css
-├── confirm.css
-└── thanks.css
-```
-
 ## 使用技術(実行環境)
-- PHP 8.4.8 
+- PHP 8.4.8
 - Laravel 8.83.8
 - MySQL 8.0.26
 

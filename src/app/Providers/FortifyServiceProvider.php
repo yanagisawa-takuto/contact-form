@@ -47,19 +47,8 @@ class FortifyServiceProvider extends ServiceProvider
         return Limit::perMinute(10)->by($request->email.$request->ip());
         });
 
-        Fortify::authenticateUsing(function ($request) {
-        $user = \App\Models\User::where('email', $request->email)->first();
-        if ($user && \Illuminate\Support\Facades\Hash::check($request->password, $user->password)) {
-        return $user;
-        }
-        });
-
         app('router')->get('/home', function () {
         return redirect('/contact');
         });
-
-        Fortify::loginView(function () {
-        return view('auth.login');
-    });
     }
 }
